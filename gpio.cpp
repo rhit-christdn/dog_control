@@ -7,11 +7,11 @@
 static const int LED_PIN = 17; // BCM GPIO 17
 static int dutyCycle = 0; // Global variable to hold the duty cycle
 
-static double STOP_DUTYCYCLE = (45 * 255) / 100; // Convert percentage to duty cycle (0-255)
-static double WALK_FORWARD_DUTYCYCLE = (60 * 255) / 100; // Convert percentage to duty cycle (0-255)
-static double RUN_FORWARD_DUTYCYCLE = (90 * 255) / 100; // Convert percentage to duty cycle (0-255)
-static double WALK_BACKWARD_DUTYCYCLE = (30 * 255) / 100; // Convert percentage to duty cycle (0-255)
-static double RUN_BACKWARD_DUTYCYCLE = (10 * 255) / 100; // Convert percentage to duty cycle (0-255)
+static double STOP_DUTYCYCLE = 45; // Duty cycle for stop (0-100 percentage)
+static double WALK_FORWARD_DUTYCYCLE = 60; // Duty cycle for walking forward (0-100 percentage)
+static double RUN_FORWARD_DUTYCYCLE = 90; // Duty cycle for running forward (0-100 percentage)
+static double WALK_BACKWARD_DUTYCYCLE = 30; // Duty cycle for walking backward (0-100 percentage)
+static double RUN_BACKWARD_DUTYCYCLE = 10; // Duty cycle for running backward (0-100 percentage)
 
 int gpioInit() {
 
@@ -26,10 +26,7 @@ int gpioInit() {
     std::cout << "PWM frequency set to: " << frequency << " Hz" << std::endl;
 
     // Set initial duty cycle
-    double percent = 50.0;
-    dutyCycle = (percent * 255) / 100; // Convert percentage to duty cycle (0-255)
-
-    gpioPWM(LED_PIN, dutyCycle); // Set PWM duty cycle
+    setDutyCycle(STOP_DUTYCYCLE);
 
     return 0;
 }
