@@ -5,7 +5,6 @@
 #include "ralph.h"
 
 static const int LED_PIN = 17; // BCM GPIO 17
-static int dutyCycle = 0; // Global variable to hold the duty cycle
 
 static double STOP_DUTYCYCLE = 45; // Duty cycle for stop (0-100 percentage)
 static double WALK_FORWARD_DUTYCYCLE = 60; // Duty cycle for walking forward (0-100 percentage)
@@ -31,8 +30,8 @@ int gpioInit() {
     return 0;
 }
 
-void setDutyCycle(int percent) {
-    if (dutyCycle < 0 || dutyCycle > 100) {
+void setDutyCycle(double percent) {
+    if (percent < 0 || percent > 100) {
         std::cerr << "Duty cycle must be between 0 and 100." << std::endl;
         return;
     }
