@@ -90,7 +90,7 @@ int main()
             double time = distance / runForwardVelo; // Calculate time in seconds
             runForward();
             std::cout << "Running for " << distance << " feet..." << std::endl;
-            std::this_thread::sleep_for(std::chrono::duration<double>(time));
+            std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(time * 1000)));
             stop();
             break;
         }
@@ -107,7 +107,7 @@ int main()
             double walkTime = walkDistance / walkForwardVelo; // Calculate time in seconds
             walkForward();
             std::cout << "Walking for " << walkDistance << " feet..." << std::endl;
-            std::this_thread::sleep_for(std::chrono::duration<double>(walkTime));
+            std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(walkTime * 1000)));
             stop();
             break;
         }
