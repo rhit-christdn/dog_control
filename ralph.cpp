@@ -87,7 +87,7 @@ int main()
                 std::cerr << "Distance cannot be negative." << std::endl;
                 continue;
             }
-            double time = distance / runForwardVelo; // Calculate time in seconds
+            double time = (distance * 12) / runForwardVelo; // Calculate time in seconds
             runForward();
             std::cout << "Running for " << distance << " feet..." << std::endl;
             std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(time * 1000)));
@@ -96,17 +96,17 @@ int main()
         }
         case WALK_DISTANCE:
         {
-            double walkDistance;
+            double distance;
             std::cout << "\n\tEnter distance in feet: ";
-            std::cin >> walkDistance;
-            if (walkDistance < 0)
+            std::cin >> distance;
+            if (distance < 0)
             {
                 std::cerr << "Distance cannot be negative." << std::endl;
                 continue;
             }
-            double walkTime = walkDistance / walkForwardVelo; // Calculate time in seconds
+            double walkTime = (distance * 12) / walkForwardVelo; // Calculate time in seconds
             walkForward();
-            std::cout << "Walking for " << walkDistance << " feet..." << std::endl;
+            std::cout << "Walking for " << distance << " feet..." << std::endl;
             std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(walkTime * 1000)));
             stop();
             break;
