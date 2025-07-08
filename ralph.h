@@ -2,7 +2,7 @@
 #define RALPH_H
 
 int gpioInit();
-void setDutyCycle(int percent);
+void setDutyCycle(double percent);
 
 void walkForward();
 void runForward();
