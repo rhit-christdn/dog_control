@@ -35,7 +35,7 @@ void setDutyCycle(double percent) {
         std::cerr << "Duty cycle must be between 0 and 100." << std::endl;
         return;
     }
-    dutyCycle = (percent * 255) / 100; // Convert percentage to duty cycle (0-255)
+    double dutyCycle = (percent / 100.0) * 255; // Convert percentage to 0-255 range
     gpioPWM(LED_PIN, dutyCycle);
 }
 
