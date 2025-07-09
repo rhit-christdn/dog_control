@@ -25,7 +25,7 @@ int gpioInit(int pin)
     std::cout << "PWM frequency set to: " << frequency << " Hz" << std::endl;
 
     // Set initial duty cycle
-    setDutyCycle(STOP_DUTYCYCLE);
+    setDutyCycle(pin, STOP_DUTYCYCLE);
 
     return 0;
 }

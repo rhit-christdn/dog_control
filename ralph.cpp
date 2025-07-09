@@ -92,7 +92,7 @@ int main()
             std::cout << "\n\tEnter distance in feet: ";
             std::cin >> distance;
 
-            walkDistance(distance);
+            runDistance(distance);
             break;
         }
         case STOP:
