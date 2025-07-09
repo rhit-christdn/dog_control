@@ -6,12 +6,12 @@
 
 int main()
 {
-    gpioInit();
+    gpioInit(FORWARD_MOVEMENT_PIN);
 
     while (true)
     {
         std::string command;
-        std::cout << "Enter command (walk_forward, run_forward, walk_backward, run_backward, stop): ";
+        std::cout << "Enter command (walk_forward, run_forward, walk_backward, run_backward, walk_distance, run_distance, stop): ";
         std::cin >> command;
 
         enum CommandType
@@ -30,10 +30,14 @@ int main()
             cmdType = WALK_FORWARD;
         else if (command == "run_forward")
             cmdType = RUN_FORWARD;
+        else if (command == "forward")
+            cmdType = WALK_FORWARD; // Alias for walk_forward
         else if (command == "walk_backward")
             cmdType = WALK_BACKWARD;
         else if (command == "run_backward")
             cmdType = RUN_BACKWARD;
+        else if (command == "backward")
+            cmdType = WALK_BACKWARD; // Alias for walk_backward
         else if (command == "run_distance")
             cmdType = RUN_DISTANCE;
         else if (command == "walk_distance")
@@ -48,7 +52,6 @@ int main()
         case WALK_FORWARD:
         {
             walkForward();
-            std::cout << "Walking forward..." << std::endl;
             std::this_thread::sleep_for(std::chrono::seconds(2));
             stop();
             break;
@@ -56,7 +59,6 @@ int main()
         case RUN_FORWARD:
         {
             runForward();
-            std::cout << "Running forward..." << std::endl;
             std::this_thread::sleep_for(std::chrono::seconds(2));
             stop();
             break;
@@ -64,7 +66,6 @@ int main()
         case WALK_BACKWARD:
         {
             walkBackward();
-            std::cout << "Walking backward..." << std::endl;
             std::this_thread::sleep_for(std::chrono::seconds(2));
             stop();
             break;
@@ -72,25 +73,7 @@ int main()
         case RUN_BACKWARD:
         {
             runBackward();
-            std::cout << "Running backward..." << std::endl;
             std::this_thread::sleep_for(std::chrono::seconds(2));
-            stop();
-            break;
-        }
-        case RUN_DISTANCE:
-        {
-            double distance;
-            std::cout << "\n\tEnter distance in feet: ";
-            std::cin >> distance;
-            if (distance < 0)
-            {
-                std::cerr << "Distance cannot be negative." << std::endl;
-                continue;
-            }
-            double time = (distance * 12) / runForwardVelo; // Calculate time in seconds
-            runForward();
-            std::cout << "Running for " << distance << " feet..." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(time * 1000)));
             stop();
             break;
         }
@@ -99,22 +82,22 @@ int main()
             double distance;
             std::cout << "\n\tEnter distance in feet: ";
             std::cin >> distance;
-            if (distance < 0)
-            {
-                std::cerr << "Distance cannot be negative." << std::endl;
-                continue;
-            }
-            double walkTime = (distance * 12) / walkForwardVelo; // Calculate time in seconds
-            walkForward();
-            std::cout << "Walking for " << distance << " feet..." << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(walkTime * 1000)));
-            stop();
+
+            walkDistance(distance);
+            break;
+        }
+        case RUN_DISTANCE:
+        {
+            double distance;
+            std::cout << "\n\tEnter distance in feet: ";
+            std::cin >> distance;
+
+            walkDistance(distance);
             break;
         }
         case STOP:
         {
             stop();
-            std::cout << "Stopping..." << std::endl;
             std::this_thread::sleep_for(std::chrono::seconds(2));
             break;
         }
